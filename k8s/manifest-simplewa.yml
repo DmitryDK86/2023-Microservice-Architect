@@ -1,15 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: ingress-ng
+  namespace: ddk
 spec:
   ingressClassName: nginx
   rules:
     - host: arch.homework
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - pathType: Prefix
+            path: /health
             backend:
               service:
                 name: app
@@ -20,32 +21,45 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app
+  namespace: ddk
 spec:
+  type: NodePort
   selector:
-    app: app
+    app: app-simple-ws
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 8000
+      name: http
+      protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-simple-ws
+  namespace: ddk
   labels:
-    app: app
+    app: app-simple-ws
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: app
+      app: app-simple-ws
   template:
     metadata:
       labels:
-        app: app
+        app: app-simple-ws
     spec:
       containers:
-        - name: app
+        - name: app-simple-ws
           image: rangdemon/docker-arch-ddk:simple-ws-amd64
           ports:
-            - containerPort: 8000
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
