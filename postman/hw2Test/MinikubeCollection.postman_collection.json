@@ -1,0 +1,51 @@
+{
+	"info": {
+		"_postman_id": "965f6620-e4cf-4c1a-b66c-24e7dea8a97b",
+		"name": "MinikubeCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CheckHealth",
+			"protocolProfileBehavior": {
+				"maxRedirects": 150
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework/health",
+					"host": [
+						"http://arch.homework"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckRedirect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework/otusapp/ddmitrenko/health",
+					"host": [
+						"http://arch.homework"
+					],
+					"path": [
+						"otusapp",
+						"ddmitrenko",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
