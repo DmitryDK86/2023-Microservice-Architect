@@ -1,5 +1,12 @@
 server:
-  port: 8000
+  port: ${SERVER_PORT:8000}
 logging:
   level:
-    org.springframework.web: DEBUG
+    org.springframework.web: ${WEB_LOGGING_LEVEL:DEBUG}
+
+spring:
+  neo4j:
+    uri: ${DATABASE_URL:bolt://localhost:7687}
+    authentication:
+      username: ${DATABASE_LOGIN:neo4j}
+      password: ${DATABASE_PASSWORD:password}

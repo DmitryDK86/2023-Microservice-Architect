@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  namespace: ddk
+data:
+  SERVER_PORT: '8000'
+  WEB_LOGGING_LEVEL: DEBUG
+  DATABASE_URL: "bolt://app-simple-ws-neo4j.ddk.svc.cluster.local:7687"
+  

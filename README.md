@@ -25,7 +25,7 @@ docker login
 ### сборка
 docker build --platform linux/amd64 -t rangdemon/docker-arch-ddk:simple-ws-amd64 .
 ### старт
-docker run --name sws_ddk -p 8000:8000 -d rangdemon/docker-arch-ddk:simple-ws-amd64
+docker run --name sws_ddk -p 8001:8001 -d rangdemon/docker-arch-ddk:simple-ws-amd64_2
 ### публикация
 docker push rangdemon/docker-arch-ddk:simple-ws-amd64
 ### спулить
@@ -48,3 +48,17 @@ minikube delete && cd {каталог с конфигом для inginx конт
 ## применить конфиг
 kubectl -n {имя спейса} apply -f {имя конфига} 
 
+## docker neo4j
+docker run -d --name testneo4j -p7474:7474 -p7687:7687 --env NEO4J_AUTH=neo4j/password neo4j:5.10
+
+## новый образ
+docker pull rangdemon/docker-arch-ddk:simple-ws-amd64_2
+
+## swagger
+http://arch.homework/swagger-ui/index.html
+
+## helm rep for neo4j
+helm -n ddk repo add neo4j https://helm.neo4j.com/neo4j
+
+## up helm repo
+helm -n ddk repo update
