@@ -7,10 +7,10 @@ name: "neo4j"
 
 # Specs for the Neo4j docker image
 image: "neo4j"
-imageTag: "4.4.3"
+imageTag: "4.4.10-enterprise"
 imagePullPolicy: "IfNotPresent"
 # imagePullSecret: registry-secret
-acceptLicenseAgreement: "no"
+acceptLicenseAgreement: "yes"
 podDisruptionBudget: {}
   # minAvailable: 2
   # maxUnavailable: 1
@@ -38,7 +38,7 @@ authEnabled: true
 
 ## Specify password for neo4j user
 ## Defaults to a random 10-character alphanumeric string if not set and authEnabled is true
-neo4jPassword: password
+# neo4jPassword:
 
 ## Specify secret name containing the password for neo4j user
 # existingPasswordSecret
@@ -87,7 +87,7 @@ core:
     ## core server data Persistent Volume size
     ## default value is large because in most cloud providers disk IOPS are proportional to disk size. Small disks frequently encounter IOPS throttling which
     ## is extremely detrimental to neo4j performance.
-    size: 128Mi
+    size: 1Ti
 
     ## core server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -159,7 +159,7 @@ core:
   restore:
     enabled: false
     image: gcr.io/neo4j-helm/restore
-    imageTag: 4.4.3
+    imageTag: 4.4.10
     secretName: null
     database: neo4j,system
     cloudProvider: gcp
@@ -193,7 +193,7 @@ readReplica:
     mountPath: /data
     ## default value is large because in most cloud providers disk IOPS are proportional to disk size. Small disks frequently encounter IOPS throttling which
     ## is extremely detrimental to neo4j performance.
-    size: 128Mi
+    size: 1Ti
     ## subPath: ""
     ## read replica data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>

@@ -8,3 +8,4 @@ data:
   WEB_LOGGING_LEVEL: DEBUG
   DATABASE_URL: "bolt://app-simple-ws-neo4j.ddk.svc.cluster.local:7687"
   
+  
