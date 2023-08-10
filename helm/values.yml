@@ -1,0 +1,11 @@
+env:
+- name: SERVER_PORT
+  value: "8000"
+- name: WEB_LOGGING_LEVEL
+  value: "DEBUG"
+- name: DATABASE_URL
+  value: "bolt://local:7687"
+- name: DATABASE_LOGIN
+  value: "neo4j"
+- name: DATABASE_PASSWORD
+  value: "password"
