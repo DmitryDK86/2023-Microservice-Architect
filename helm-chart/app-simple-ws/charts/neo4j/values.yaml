@@ -87,7 +87,7 @@ core:
     ## core server data Persistent Volume size
     ## default value is large because in most cloud providers disk IOPS are proportional to disk size. Small disks frequently encounter IOPS throttling which
     ## is extremely detrimental to neo4j performance.
-    size: 1Ti
+    size: 512Mi
 
     ## core server data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
@@ -193,7 +193,7 @@ readReplica:
     mountPath: /data
     ## default value is large because in most cloud providers disk IOPS are proportional to disk size. Small disks frequently encounter IOPS throttling which
     ## is extremely detrimental to neo4j performance.
-    size: 1Ti
+    size: 512Mi
     ## subPath: ""
     ## read replica data Persistent Volume Storage Class
     ## If defined, storageClassName: <storageClass>
