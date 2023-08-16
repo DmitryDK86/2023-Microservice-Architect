@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-configmap
-  namespace: ddk
+  name: {{ .Release.Name }}-configmap  
 data:
   SERVER_PORT: '8000'
   WEB_LOGGING_LEVEL: DEBUG

@@ -27,6 +27,18 @@
             <version>3.0.5</version>
         </dependency>
 
+        <!-- METRICS -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <!-- METRICS -->
+
         <!-- SWAGGER -->
         <dependency>
             <groupId>org.springdoc</groupId>
