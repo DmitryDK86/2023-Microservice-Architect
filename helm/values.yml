@@ -9,3 +9,12 @@ env:
   value: "neo4j"
 - name: DATABASE_PASSWORD
   value: "password"
+  #security
+- name: ACTIVE_PROFILE
+  value: "security"
+- name: JWT_URI
+  value: "https://keycloak.ddk.svc.cluster.local:8080/auth/realms/SWS"
+- name: OAUTH_CLIENT
+  value: "sws"
+- name: CLIENT_SECRET
+  value: "sHJHPBt4anhsqCUd0CSFPWHSkrKRV8dh"

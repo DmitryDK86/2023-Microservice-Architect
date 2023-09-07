@@ -1,10 +1,12 @@
 package ru.ddk.simplewebservice.controller.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.ddk.simplewebservice.configure.AppConfig;
 
 @RestController
+@RequestMapping()
 public class StatusController  {
 
     private final AppConfig appConfig;

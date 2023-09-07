@@ -2,7 +2,10 @@ server:
   port: ${SERVER_PORT:8000}
 logging:
   level:
-    org.springframework.web: ${WEB_LOGGING_LEVEL:DEBUG}
+    ru: DEBUG
+
+keycloak:
+  enabled: true
 
 spring:
   neo4j:
@@ -20,3 +23,4 @@ management:
     export:
       prometheus:
         enabled: true
+

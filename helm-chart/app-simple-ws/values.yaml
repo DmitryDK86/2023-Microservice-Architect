@@ -8,7 +8,7 @@ image:
   repository: rangdemon/docker-arch-ddk
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "simple-ws-amd64_3"
+  tag: "simple-ws-amd64_5"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -41,21 +41,17 @@ service:
   type: NodePort
   port: 80
 
-metrics:
-  serviceMonitor:
-    enabled: true
-
 ingress:
-  enabled: true
-  className: "nginx"
-  annotations:    
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-       rewrite ^/otusapp/\w+/$ http://arch.homework/health permanent;
-  hosts:
-    - host: arch.homework
-      paths:
-        - path: /
-          pathType: Prefix
+  enabled: false
+  #className: "nginx"
+  #annotations:    
+  #  nginx.ingress.kubernetes.io/configuration-snippet: |
+  #     rewrite ^/otusapp/\w+/$ http://arch.homework/health permanent;
+  #hosts:
+  #  - host: arch.homework
+  #    paths:
+  #      - path: /
+  #        pathType: Prefix
   #tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -90,4 +86,6 @@ neo4j:
   neo4jUser: neo4j
   neo4jPassword: password
 
+podSpec:
+  serviceAccountName: "neo4j-service-account"
  
