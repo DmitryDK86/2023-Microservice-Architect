@@ -10,6 +10,7 @@ import ru.ddk.simplewebservice.services.UserService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/v1")
 public class DbController {
 
     private final UserService userService;

@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "965f6620-e4cf-4c1a-b66c-24e7dea8a97b",
+		"name": "MinikubeCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30028312"
+	},
+	"item": [
+		{
+			"name": "HW5",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.2.98:30329/auth/login?state=5f3c7914-9842-4f46-bc01-6e97ac12edb3",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"2",
+								"98"
+							],
+							"port": "30329",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "5f3c7914-9842-4f46-bc01-6e97ac12edb3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile_auth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://192.168.2.98:30329/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://192.168.2.98:30329/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile_anonim",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://192.168.2.98:30329/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Registration_user_1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.2.98:30329/auth/login?state=5f3c7914-9842-4f46-bc01-6e97ac12edb3",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"2",
+								"98"
+							],
+							"port": "30329",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "5f3c7914-9842-4f46-bc01-6e97ac12edb3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostProfile_user_1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test@email.com",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "9-999-999-99",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://192.168.2.98:30329/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile_check_profile_1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://192.168.2.98:30329/profile"
+					},
+					"response": []
+				},
+				{
+					"name": "logout_profile_1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://192.168.2.98:30329/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "Registration_user_2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.2.98:30329/auth/login?state=5f3c7914-9842-4f46-bc01-6e97ac12edb3",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"2",
+								"98"
+							],
+							"port": "30329",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "5f3c7914-9842-4f46-bc01-6e97ac12edb3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProfile_check_profile_2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://192.168.2.98:30329/profile"
+					},
+					"response": []
+				}
+			]
+		}	
+	]
+}

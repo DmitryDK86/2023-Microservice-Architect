@@ -45,6 +45,9 @@ minikube delete && cd {каталог с конфигом для inginx конт
 && helm repo update && helm install nginx ingress-nginx/ingress-nginx --namespace {имя спейса} -f {название файла с конфигон для контроллера} 
 && minikube ip
 
+## почистить все в неймспейсе
+kubectl delete all --all -n ddk
+
 ## применить конфиг
 kubectl -n {имя спейса} apply -f {имя конфига} 
 
@@ -56,6 +59,9 @@ docker pull rangdemon/docker-arch-ddk:simple-ws-amd64_2
 
 ## swagger
 http://arch.homework/swagger-ui/index.html
+
+## install
+helm -n ddk install app-simple-ws ./
 
 ## helm rep for neo4j
 helm -n ddk repo add neo4j https://helm.neo4j.com/neo4j
@@ -80,3 +86,30 @@ admin/prom-operator
 ## настройка prometheus
 важно проверить в таргетах источник метрик
  
+## istio
+для вин скачать istioctl.exe
+istioctl operator init --watchedNamespaces istio-system --operatorNamespace istio-operator
+
+## keycloak
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-keycloak bitnami/keycloak --version 16.1.2 --set auth.adminPassword=secretpassword
+kubectl get secret --namespace default my-keycloak -o jsonpath="{.data.admin-password}"
+
+helm search repo keycloak -l
+
+#hw5
+minikube start --image-repository=auto --vm-driver hyperv --hyperv-virtual-switch "PVS" --kubernetes-version=v1.24.3
+kubectl create namespace ddk
+kubectl create namespace istio-system
+kubectl create namespace istio-operator
+
+cd app-simple-ws - из репозитория
+helm -n ddk install app-simple-ws ./
+cd HW5 - из репозитория
+kubectl -n ddk apply -f ./auth/authserver.yaml
+
+istioctl operator init --watchedNamespaces istio-system --operatorNamespace istio-operator
+kubectl apply -f istio.yaml
+kubectl apply -f routes.yaml
+kubectl apply -f auth.yaml
+
