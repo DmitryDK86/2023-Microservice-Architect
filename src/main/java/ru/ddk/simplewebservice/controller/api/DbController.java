@@ -33,24 +33,27 @@ public class DbController {
 
     @Timed(value = "ddk_timed_add_new")
     @PostMapping("/add")
-    private UserDto addUser(@RequestParam(defaultValue = "userName", required = false) String userName,
+    private UserDto addUser(@RequestHeader("IdempotencyKey") Integer idempotencyKey,
+                         @RequestParam(defaultValue = "userName", required = false) String userName,
                          @RequestParam(defaultValue = "firstName", required = false) String firstName,
                          @RequestParam(defaultValue = "lastName", required = false) String lastName,
                          @RequestParam(defaultValue = "email", required = false) String email,
                          @RequestParam(defaultValue = "phone", required = false) String phone
     ){
-        return userService.save(new User(userName, firstName, lastName, email, phone));
+
+        return userService.save(idempotencyKey, new User(userName, firstName, lastName, email, phone));
     }
 
     @Timed(value = "ddk_timed_update")
     @PutMapping("/update")
-    private UserDto updateUser(@RequestParam(defaultValue = "userName", required = false) String userName,
+    private UserDto updateUser(@RequestHeader("IdempotencyKey") Integer idempotencyKey,
+                         @RequestParam(defaultValue = "userName", required = false) String userName,
                          @RequestParam(defaultValue = "firstName", required = false) String firstName,
                          @RequestParam(defaultValue = "lastName", required = false) String lastName,
                          @RequestParam(defaultValue = "email", required = false) String email,
                          @RequestParam(defaultValue = "phone", required = false) String phone
     ){
-        return userService.save(new User(userName, firstName, lastName, email, phone));
+        return userService.save(idempotencyKey, new User(userName, firstName, lastName, email, phone));
     }
 
     @Timed(value = "ddk_timed_del")

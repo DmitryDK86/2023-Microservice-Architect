@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserService {
     List<UserDto> findAll();
     boolean delete(String userId);
-    UserDto save(User user);
+    UserDto save(Integer id, User user);
     UserDto findById(String id);
 }

@@ -8,7 +8,7 @@ image:
   repository: rangdemon/docker-arch-ddk
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "simple-ws-amd64_5"
+  tag: "simple-ws-amd64_6"
 
 imagePullSecrets: []
 nameOverride: ""
