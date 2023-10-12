@@ -2,13 +2,14 @@ package ru.ddk.simplewebservice.services;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.ddk.simplewebservice.domain.User;
 import ru.ddk.simplewebservice.dto.UserDto;
 import ru.ddk.simplewebservice.mapper.UserMapper;
 import ru.ddk.simplewebservice.repository.UserRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+
+    private final Map<Integer, User> idempotentMap = new HashMap<>();
 
     public UserServiceImpl(UserRepository userRepository,
                            UserMapper userMapper) {
@@ -42,9 +45,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto save(User user) {
+    public UserDto save(Integer id, User user) {
         try{
-            UserDto save = userMapper.toDto( userRepository.save(user));
+            if(!idempotentMap.containsKey(id))
+            {
+                idempotentMap.put(id, userRepository.save(user));
+            }
+            UserDto save = userMapper.toDto( idempotentMap.get(id));
             log.info("User has ben save User: " + user);
             return save;
         }catch (Exception e){
