@@ -39,7 +39,7 @@ public class DbController {
                          @RequestParam(defaultValue = "email", required = false) String email,
                          @RequestParam(defaultValue = "phone", required = false) String phone
     ){
-        return userService.save(new User(userName, firstName, lastName, email, phone));
+        return userService.savePost(new User(userName, firstName, lastName, email, phone));
     }
 
     @Timed(value = "ddk_timed_update")
@@ -50,7 +50,7 @@ public class DbController {
                          @RequestParam(defaultValue = "email", required = false) String email,
                          @RequestParam(defaultValue = "phone", required = false) String phone
     ){
-        return userService.save(new User(userName, firstName, lastName, email, phone));
+        return userService.savePut(new User(userName, firstName, lastName, email, phone));
     }
 
     @Timed(value = "ddk_timed_del")

@@ -113,3 +113,6 @@ kubectl apply -f istio.yaml
 kubectl apply -f routes.yaml
 kubectl apply -f auth.yaml
 
+#разделяем на микросервисы
+simple-ws-amd64_5 - полная версия
+simple-ws-amd64-r - версия только для чтения, ф-ции удаление/обновление/сохранение смотрят на  simple-ws-amd64_5 по REST

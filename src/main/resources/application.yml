@@ -24,3 +24,4 @@ management:
       prometheus:
         enabled: true
 
+writeserviceurl: ${DATABASE_WRITE_SERVICE:http://localhost:8080}

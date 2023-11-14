@@ -18,3 +18,6 @@ env:
   value: "sws"
 - name: CLIENT_SECRET
   value: "sHJHPBt4anhsqCUd0CSFPWHSkrKRV8dh"
+  #microservice write
+- name: DATABASE_WRITE_SERVICE
+  value: "http://app-simple-ws-write.ddk.svc.cluster.local:80"

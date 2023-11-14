@@ -11,9 +11,8 @@ import ru.ddk.simplewebservice.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 @Log4j2
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl {//implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -24,12 +23,12 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    @Override
+    //@Override
     public List<UserDto> findAll() {
         return userRepository.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
     }
 
-    @Override
+    //@Override
     public boolean delete(String userId) {
         try{
             userRepository.deleteById(userId);
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
+    //@Override
     public UserDto save(User user) {
         try{
             UserDto save = userMapper.toDto( userRepository.save(user));
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
+    //@Override
     public UserDto findById(String id) {
         return userRepository.findById(id).map(userMapper::toDto).orElse(new UserDto("can`t find by id: " + id, "", "","",""));
     }

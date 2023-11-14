@@ -18,6 +18,9 @@ public class AppConfig {
     @Value("${spring.neo4j.authentication.password}")
     private String userPassword;
 
+    @Value("${writeserviceurl}")
+    private String writeServiceUrl;
+
     @Override
     public String toString() {
         return "AppConfig{" +
@@ -26,5 +29,9 @@ public class AppConfig {
                 ", userName='" + userName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
                 '}';
+    }
+
+    public String getWriteServiceUrl() {
+        return writeServiceUrl;
     }
 }
