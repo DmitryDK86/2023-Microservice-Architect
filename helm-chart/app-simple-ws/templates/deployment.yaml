@@ -72,7 +72,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: neo4j-secrets
-                  key: password                  
+                  key: password           
+            - name: DATABASE_WRITE_SERVICE     
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: DATABASE_WRITE_SERVICE            
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
