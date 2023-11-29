@@ -11,8 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
-@Service
-public class UserMicroServiceImpl implements UserService {
+public class UserMicroServiceImpl implements UserServiceHttp {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final HttpRest httpRest;

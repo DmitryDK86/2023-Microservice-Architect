@@ -116,3 +116,6 @@ kubectl apply -f auth.yaml
 #разделяем на микросервисы
 simple-ws-amd64_5 - полная версия
 simple-ws-amd64-r - версия только для чтения, ф-ции удаление/обновление/сохранение смотрят на  simple-ws-amd64_5 по REST
+
+# двухфазный коммит
+docker push rangdemon/docker-arch-ddk:simple-ws-amd64_w_two_phase

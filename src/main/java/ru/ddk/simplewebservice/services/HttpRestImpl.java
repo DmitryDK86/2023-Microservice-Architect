@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -30,6 +31,11 @@ public class HttpRestImpl implements HttpRest {
     @Override
     public String deleteQuery(String userName) {
         return deleteQuery(writeDataService + "/v1/delete", new User(userName, "", "", "", ""), "DELETE");
+    }
+
+    @Override
+    public List<JsonObject> findAll(User user) {
+        return null;
     }
 
     @Override
