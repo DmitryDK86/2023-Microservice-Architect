@@ -75,7 +75,14 @@ public class LocalChangesServiceImpl implements LocalChangesService {
         } catch (Exception e) {
             localChanges.setAborted(true);
             localChanges.setCommitted(false);
-            return localChangesMapper.toDto(localChanges);
+            return localChangesMapper.toDto(new LocalChanges(localChanges.getUsername(),
+                    false,
+                    true,
+                    localChanges.getTranId(),
+                    localChanges.getFirstName(),
+                    localChanges.getLastName(),
+                    localChanges.getEmail(),
+                    localChanges.getPhone()));
         }
     }
 //    @Override

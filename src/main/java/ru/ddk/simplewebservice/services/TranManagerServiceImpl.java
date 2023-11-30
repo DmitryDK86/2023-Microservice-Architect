@@ -1,9 +1,13 @@
 package ru.ddk.simplewebservice.services;
 
+import com.google.gson.JsonObject;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import ru.ddk.simplewebservice.domain.LocalChanges;
 import ru.ddk.simplewebservice.domain.TranManager;
+import ru.ddk.simplewebservice.dto.LocalChangesDto;
 import ru.ddk.simplewebservice.dto.TranManagerDto;
+import ru.ddk.simplewebservice.mapper.LocalChangesMapper;
 import ru.ddk.simplewebservice.mapper.TranManagerMapper;
 import ru.ddk.simplewebservice.repository.TranManagerRepository;
 
@@ -16,10 +20,14 @@ public class TranManagerServiceImpl implements TranManagerService {
 
     private final TranManagerRepository tranManagerRepository;
     private final TranManagerMapper tranManagerMapper;
+    private final HttpLocalChangesRest httpLocalChangesRest;
+    private final LocalChangesMapper localChangesMapper;
 
-    public TranManagerServiceImpl(TranManagerRepository tranManagerRepository, TranManagerMapper tranManagerMapper) {
+    public TranManagerServiceImpl(TranManagerRepository tranManagerRepository, TranManagerMapper tranManagerMapper, HttpLocalChangesRest httpLocalChangesRest, LocalChangesMapper localChangesMapper) {
         this.tranManagerRepository = tranManagerRepository;
         this.tranManagerMapper = tranManagerMapper;
+        this.httpLocalChangesRest = httpLocalChangesRest;
+        this.localChangesMapper = localChangesMapper;
     }
 
     @Override
@@ -33,11 +41,15 @@ public class TranManagerServiceImpl implements TranManagerService {
     }
 
     @Override
-    public TranManagerDto save(TranManager tranManager) {
+    public TranManagerDto save(TranManager tranManager, LocalChanges localChanges) {
         try {
             TranManagerDto save = tranManagerMapper.toDto(tranManagerRepository.save(tranManager));
 
-            // тут update вызвать через http
+            // тут save localchanges вызвать через http
+            JsonObject jsonObject = httpLocalChangesRest.postSaveQuery(localChanges);
+            LocalChangesDto localChangesDto = localChangesMapper.toDto(jsonObject);
+
+            update(new TranManager(localChangesDto.getTranId(), localChangesDto.getCommitted(), localChangesDto.getAborted(), 0, 0));
 
             log.info("tranManager has ben save tranManager: " + tranManager);
             return save;

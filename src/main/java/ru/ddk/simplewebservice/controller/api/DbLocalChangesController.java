@@ -9,12 +9,12 @@ import ru.ddk.simplewebservice.services.LocalChangesService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/cl")
-public class DbCimmitLogController {
+@RequestMapping("/v1/lc")
+public class DbLocalChangesController {
 
     private final LocalChangesService localChangesService;
 
-    public DbCimmitLogController(LocalChangesService localChangesService) {
+    public DbLocalChangesController(LocalChangesService localChangesService) {
         this.localChangesService = localChangesService;
     }
 
@@ -52,12 +52,12 @@ public class DbCimmitLogController {
     }
 
     @DeleteMapping("/delete")
-    private String deleteLocalChang(@RequestParam(defaultValue = "", required = false) String tranId){
-        if(tranId.isEmpty())
+    private String deleteLocalChang(@RequestParam(defaultValue = "", required = false) String userName){
+        if(userName.isEmpty())
         {
             return "tranId has not be empty";
         }
-        if(localChangesService.delete(tranId))
+        if(localChangesService.delete(userName))
         {
             return "tranId deleted";
         } else {

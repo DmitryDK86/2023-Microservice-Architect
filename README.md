@@ -119,3 +119,4 @@ simple-ws-amd64-r - версия только для чтения, ф-ции у�
 
 # двухфазный коммит
 docker push rangdemon/docker-arch-ddk:simple-ws-amd64_w_two_phase
+docker build --platform linux/amd64 -t rangdemon/docker-arch-ddk:simple-ws-amd64_w_two_phase .

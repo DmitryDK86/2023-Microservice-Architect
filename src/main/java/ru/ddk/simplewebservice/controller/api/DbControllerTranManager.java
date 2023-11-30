@@ -3,6 +3,7 @@ package ru.ddk.simplewebservice.controller.api;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import ru.ddk.simplewebservice.domain.LocalChanges;
 import ru.ddk.simplewebservice.domain.TranManager;
 import ru.ddk.simplewebservice.dto.TranManagerDto;
 import ru.ddk.simplewebservice.dto.UserDto;
@@ -31,9 +32,16 @@ public class DbControllerTranManager {
                          @RequestParam(defaultValue = "false", required = false) boolean committed,
                          @RequestParam(defaultValue = "false", required = false) boolean aborted,
                          @RequestParam(defaultValue = "1", required = false) Integer cntInst,
-                         @RequestParam(defaultValue = "0", required = false) Integer cntRespInst
+                         @RequestParam(defaultValue = "0", required = false) Integer cntRespInst,
+
+                         @RequestParam(defaultValue = "userName", required = false) String userName,
+                         @RequestParam(defaultValue = "firstName", required = false) String firstName,
+                         @RequestParam(defaultValue = "lastName", required = false) String lastName,
+                         @RequestParam(defaultValue = "email", required = false) String email,
+                         @RequestParam(defaultValue = "phone", required = false) String phone
     ){
-        return tranManagerService.save(new TranManager(tranId, committed, aborted, cntInst, cntRespInst));
+        return tranManagerService.save(new TranManager(tranId, committed, aborted, cntInst, cntRespInst),
+                new LocalChanges(userName, committed, aborted, tranId, firstName, lastName, email, phone));
     }
 
     @PostMapping("/update")
