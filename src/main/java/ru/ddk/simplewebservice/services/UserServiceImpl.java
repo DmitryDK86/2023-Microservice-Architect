@@ -2,7 +2,6 @@ package ru.ddk.simplewebservice.services;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.ddk.simplewebservice.domain.User;
 import ru.ddk.simplewebservice.dto.UserDto;
 import ru.ddk.simplewebservice.mapper.UserMapper;
@@ -12,7 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
-public class UserServiceImpl {//implements UserService {
+@Service
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -23,12 +23,12 @@ public class UserServiceImpl {//implements UserService {
         this.userMapper = userMapper;
     }
 
-    //@Override
+    @Override
     public List<UserDto> findAll() {
         return userRepository.findAll().stream().map(userMapper::toDto).collect(Collectors.toList());
     }
 
-    //@Override
+    @Override
     public boolean delete(String userId) {
         try{
             userRepository.deleteById(userId);
@@ -40,7 +40,7 @@ public class UserServiceImpl {//implements UserService {
         }
     }
 
-    //@Override
+    @Override
     public UserDto save(User user) {
         try{
             UserDto save = userMapper.toDto( userRepository.save(user));
@@ -52,7 +52,7 @@ public class UserServiceImpl {//implements UserService {
         }
     }
 
-    //@Override
+    @Override
     public UserDto findById(String id) {
         return userRepository.findById(id).map(userMapper::toDto).orElse(new UserDto("can`t find by id: " + id, "", "","",""));
     }

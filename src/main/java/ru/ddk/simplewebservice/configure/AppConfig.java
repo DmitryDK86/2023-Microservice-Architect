@@ -21,6 +21,9 @@ public class AppConfig {
     @Value("${writeserviceurl}")
     private String writeServiceUrl;
 
+    @Value("${tranmanagerserviceurl}")
+    private String tranmanagerserviceurl;
+
     @Override
     public String toString() {
         return "AppConfig{" +
@@ -33,5 +36,9 @@ public class AppConfig {
 
     public String getWriteServiceUrl() {
         return writeServiceUrl;
+    }
+
+    public String getTranmanagerserviceurl() {
+        return tranmanagerserviceurl;
     }
 }

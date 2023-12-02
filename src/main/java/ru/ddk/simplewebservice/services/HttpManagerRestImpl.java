@@ -6,52 +6,37 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 import ru.ddk.simplewebservice.configure.AppConfig;
-import ru.ddk.simplewebservice.domain.User;
+import ru.ddk.simplewebservice.domain.LocalChanges;
+import ru.ddk.simplewebservice.domain.TranManager;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Log4j2
-//@Service
-public class HttpRestImpl implements HttpRest {
-
+@Service
+public class HttpManagerRestImpl implements HttpManagerRest {
     private final AppConfig appConfig;
-    private final String writeDataService;
+    private final String tranmanagerserviceurl;
+    static final String urlPart = "/v1/tm";
 
-    public HttpRestImpl(AppConfig appConfig) {
+    public HttpManagerRestImpl(AppConfig appConfig) {
         this.appConfig = appConfig;
-        writeDataService = appConfig.getWriteServiceUrl();
+        tranmanagerserviceurl = appConfig.getTranmanagerserviceurl() + urlPart;
     }
 
     @Override
-    public String deleteQuery(String userName) {
-        return deleteQuery(writeDataService + "/v1/delete", new User(userName, "", "", "", ""), "DELETE");
+    public JsonObject postSaveQuery(TranManager tranManager, LocalChanges localChanges) {
+        return saveQuery(tranmanagerserviceurl + "/add", tranManager, localChanges, "POST");
     }
 
-    @Override
-    public List<JsonObject> findAll(User user) {
-        return null;
-    }
+    public JsonObject saveQuery(String url, TranManager tranManager, LocalChanges localChanges, String method) {
+        log.info("URL: " + url + " localChanges: " + localChanges);
 
-    @Override
-    public JsonObject putSaveQuery(User user) {
-        return saveQuery(writeDataService + "/v1/update", user, "PUT");
-    }
-
-    @Override
-    public JsonObject postSaveQuery(User user) {
-        return saveQuery(writeDataService + "/v1/add", user, "POST");
-    }
-
-    public JsonObject saveQuery(String url, User user, String method) {
-        log.info("URL: " + url + " user: " + user);
-
-        HttpURLConnection con = httpConnect(url, method, user);
+        HttpURLConnection con = httpConnect(url, method, tranManager, localChanges);
         try {
             byte[] bytes = IOUtils.toByteArray(con.getInputStream());
             String result = IOUtils.toString(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(bytes))));
@@ -62,19 +47,19 @@ public class HttpRestImpl implements HttpRest {
         }
     }
 
-    public String deleteQuery(String url, User user, String method) {
-        log.info("URL: " + url + " user: " + user);
+//    public String deleteQuery(String url, LocalChanges localChanges, String method) {
+//        log.info("URL: " + url + " tran: " + localChanges);
+//
+//        HttpURLConnection con = httpConnect(url, method, localChanges);
+//        try {
+//            byte[] bytes = IOUtils.toByteArray(con.getInputStream());
+//            return IOUtils.toString(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(bytes))));
+//        } catch (IOException e) {
+//            return e.toString();
+//        }
+//    }
 
-        HttpURLConnection con = httpConnect(url, method, user);
-        try {
-            byte[] bytes = IOUtils.toByteArray(con.getInputStream());
-            return IOUtils.toString(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(bytes))));
-        } catch (IOException e) {
-            return e.toString();
-        }
-    }
-
-    private HttpURLConnection httpConnect(String urlString, String method, User user) {
+    private HttpURLConnection httpConnect(String urlString, String method, TranManager tranManager, LocalChanges localChanges) {
 
         URL url = null;
         HttpURLConnection con = null;
@@ -85,9 +70,9 @@ public class HttpRestImpl implements HttpRest {
             con.setDoInput(true);
             con.setDoOutput(true);
             if (method.equals("DELETE")) {
-                paramDeleteQuery(con, user.getUsername());
+                paramDeleteQuery(con, localChanges.getUsername());
             } else {
-                paramSaveQuery(con, user);
+                paramSaveQuery(con, tranManager, localChanges);
             }
 
             con.connect();
@@ -97,16 +82,21 @@ public class HttpRestImpl implements HttpRest {
         return con;
     }
 
-    private void paramSaveQuery(HttpURLConnection con, User user) {
+    private void paramSaveQuery(HttpURLConnection con, TranManager tranManager, LocalChanges localChanges) {
         DataOutputStream out = null;
         try {
 
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("userName", user.getUsername());
-            parameters.put("firstName", user.getFirstName());
-            parameters.put("lastName", user.getLastName());
-            parameters.put("email", user.getEmail());
-            parameters.put("phone", user.getPhone());
+            parameters.put("committed", tranManager.getCommitted().toString());
+            parameters.put("aborted", tranManager.getAborted().toString());
+            parameters.put("tranId", tranManager.getIdTran());
+            parameters.put("cntInst", tranManager.getCntInst().toString());
+            parameters.put("cntRespInst", tranManager.getCntRespInst().toString());
+            parameters.put("userName", localChanges.getUsername());
+            parameters.put("firstName", localChanges.getFirstName());
+            parameters.put("lastName", localChanges.getLastName());
+            parameters.put("email", localChanges.getEmail());
+            parameters.put("phone", localChanges.getPhone());
 
             OutputStream os = con.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
@@ -121,11 +111,11 @@ public class HttpRestImpl implements HttpRest {
         }
     }
 
-    private void paramDeleteQuery(HttpURLConnection con, String user) {
+    private void paramDeleteQuery(HttpURLConnection con, String tranId) {
         DataOutputStream out = null;
         try {
             Map<String, String> parameters = new HashMap<>();
-            parameters.put("userName", user);
+            parameters.put("tranId", tranId);
             OutputStream os = con.getOutputStream();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(os, "UTF-8"));

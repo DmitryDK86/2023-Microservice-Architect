@@ -25,3 +25,4 @@ management:
         enabled: true
 
 writeserviceurl: ${DATABASE_WRITE_SERVICE:http://localhost:8080}
+tranmanagerserviceurl: ${TRAN_MANAGER_SERVICE:http://localhost:8080}

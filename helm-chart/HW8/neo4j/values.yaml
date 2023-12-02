@@ -1,0 +1,7 @@
+neo4j:
+  edition: community
+  name: app-simple-ws-neo4j  
+  password: password  
+volumes:
+  data:
+    mode: "defaultStorageClass"
