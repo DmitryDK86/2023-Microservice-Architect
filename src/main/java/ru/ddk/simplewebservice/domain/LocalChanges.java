@@ -13,7 +13,7 @@ import org.springframework.data.neo4j.core.schema.Property;
 public class LocalChanges {
 
     @Id
-    @Schema(description = "id object")
+    @Schema(description = "username")
     private final String username;
 
     @Schema(description = "committed")

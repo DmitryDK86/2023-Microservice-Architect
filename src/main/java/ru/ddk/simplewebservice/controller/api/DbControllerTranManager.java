@@ -11,8 +11,8 @@ import ru.ddk.simplewebservice.services.TranManagerService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/v1/tm")
+//@RestController
+//@RequestMapping("/v1/tm")
 public class DbControllerTranManager {
 
     private final TranManagerService tranManagerService;

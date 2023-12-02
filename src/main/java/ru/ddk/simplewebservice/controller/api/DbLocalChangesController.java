@@ -8,8 +8,8 @@ import ru.ddk.simplewebservice.services.LocalChangesService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/v1/lc")
+//@RestController
+//@RequestMapping("/v1/lc")
 public class DbLocalChangesController {
 
     private final LocalChangesService localChangesService;
