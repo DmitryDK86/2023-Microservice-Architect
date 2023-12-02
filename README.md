@@ -118,5 +118,12 @@ simple-ws-amd64_5 - полная версия
 simple-ws-amd64-r - версия только для чтения, ф-ции удаление/обновление/сохранение смотрят на  simple-ws-amd64_5 по REST
 
 # двухфазный коммит
-docker push rangdemon/docker-arch-ddk:simple-ws-amd64_w_two_phase
+rangdemon/docker-arch-ddk:simple-ws-amd64_w_two_phase - пишет
+rangdemon/docker-arch-ddk:simple-ws-amd64_tran_m - посылает в phase
+rangdemon/docker-arch-ddk:simple-ws-amd64_r_tran_m - читает и отправляет запрос по rest
+
 docker build --platform linux/amd64 -t rangdemon/docker-arch-ddk:simple-ws-amd64_w_two_phase .
+
+#neo4j отдельно
+helm -n ddk repo add neo4j https://helm.neo4j.com/neo4j
+helm -n ddk install neo4j neo4j/neo4j -f .\values.yaml
