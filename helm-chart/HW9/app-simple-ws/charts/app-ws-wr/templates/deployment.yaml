@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "app-simple-ws-write.fullname" . }}
+  labels:
+    {{- include "app-simple-ws-write.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "app-simple-ws-write.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "app-simple-ws-write.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "app-simple-ws-write.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}           
+          env:
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: SERVER_PORT  
+            - name: WEB_LOGGING_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: WEB_LOGGING_LEVEL
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: DATABASE_URL
+            - name: DATABASE_LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: neo4j-secrets
+                  key: username     
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: neo4j-secrets
+                  key: password      
+            - name: DATABASE_WRITE_SERVICE     
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: DATABASE_WRITE_SERVICE        
+            - name: TRAN_MANAGER_SERVICE     
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: TRAN_MANAGER_SERVICE 
+            - name: KAFKA_BOOTSTRAP     
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: KAFKA_BOOTSTRAP        
+            - name: KAFKA_TOPIC     
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: KAFKA_TOPIC        
+            - name: KAFKA_GROUP     
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-configmap           
+                  key: KAFKA_GROUP                   
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
