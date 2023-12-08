@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  SERVER_PORT: '8000'
+  WEB_LOGGING_LEVEL: DEBUG
+  DATABASE_URL: "bolt://neo4j.ddk.svc.cluster.local:7687"
+  DATABASE_WRITE_SERVICE: "http://app-simple-ws-app-simple-ws-write.ddk.svc.cluster.local:80"
+  TRAN_MANAGER_SERVICE: "http://app-simple-ws-app-ws-tran-m.ddk.svc.cluster.local:80"
+  KAFKA_BOOTSTRAP: "cp-helm-charts-cp-kafka.ddk.svc.cluster.local:9092"
+  KAFKA_TOPIC: "topic1"
+  KAFKA_GROUP: "groupId222"

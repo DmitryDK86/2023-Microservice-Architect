@@ -127,3 +127,27 @@ docker build --platform linux/amd64 -t rangdemon/docker-arch-ddk:simple-ws-amd64
 #neo4j отдельно
 helm -n ddk repo add neo4j https://helm.neo4j.com/neo4j
 helm -n ddk install neo4j neo4j/neo4j -f .\values.yaml
+
+# kafka
+качаем гит репу от confluence  cp-helm-charts
+git clone https://github.com/confluentinc/cp-helm-charts.git
+в values прописать для cp-kafka
+nodeport:
+  enabled: true
+  servicePort: 19092
+  firstListenerPort: 31090
+configurationOverrides:
+  "offsets.topic.replication.factor": "3"
+  "advertised.listeners": |-
+   EXTERNAL://localhost:$((31090 + ${KAFKA_BROKER_ID}))
+  "listener.security.protocol.map": |-
+   PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+
+ставим кафку
+helm -n ddk install cp-helm-charts .\
+
+ставим neo4j
+helm -n ddk install neo4j neo4j/neo4j -f .\values.yaml
+
+ставим 3и сервиса
+helm -n ddk install app-simple-ws .\
